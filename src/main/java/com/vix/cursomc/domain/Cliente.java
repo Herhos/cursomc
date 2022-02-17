@@ -21,6 +21,9 @@ import com.vix.cursomc.domain.enums.TipoCliente;
 public class Cliente implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+	
+	// ATRIBUTOS
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -28,6 +31,8 @@ public class Cliente implements Serializable
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
+	
+	// ASSOCIAÇÕES
 	
 	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
@@ -37,7 +42,12 @@ public class Cliente implements Serializable
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
-		 
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
+	// CONSTRUTORES
+	
 	public Cliente() {}
 
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo)
@@ -50,6 +60,8 @@ public class Cliente implements Serializable
 		this.tipo = tipo.getCod();
 	}
 
+	// GETTERS E SETTERS
+	
 	public Integer getId() {
 		return id;
 	}
@@ -106,6 +118,16 @@ public class Cliente implements Serializable
 		this.telefones = telefones;
 	}
 
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
+	// HASHCODE E EQUALS
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -129,5 +151,5 @@ public class Cliente implements Serializable
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
+	}		
 }

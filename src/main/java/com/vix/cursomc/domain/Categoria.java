@@ -16,15 +16,22 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Categoria implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+	
+	//ATRIBUTOS
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	
+	// ASSOCIAÇÕES
+	
 	//Mapeamento muitos para muitos dos dois lados
 	@JsonManagedReference
 	@ManyToMany(mappedBy = "categorias") 	
 	private List<Produto> produtos = new ArrayList<>();
+	
+	// CONSTRUTORES
 	
 	public Categoria() {}
 	
@@ -34,6 +41,8 @@ public class Categoria implements Serializable
 		this.nome = nome;
 	}
 
+	// GETTERS E SETTERS
+	
 	public Integer getId() {
 		return id;
 	}
@@ -58,6 +67,8 @@ public class Categoria implements Serializable
 		this.produtos = produtos;
 	}
 
+	// HASHCODE E EQUALS
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

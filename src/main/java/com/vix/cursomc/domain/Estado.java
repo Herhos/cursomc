@@ -10,20 +10,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Estado implements Serializable
 {
 	private static final long serialVersionUID = 1L;
+	
+	// ATRIBUTOS
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	
-	@JsonBackReference
+	// ASSOCIAÇÕES
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "estado")
 	private List<Cidade> cidades = new ArrayList<>();
+	
+	// CONSTRUTORES
 	
 	public Estado() {}
 
@@ -32,6 +39,8 @@ public class Estado implements Serializable
 		this.id = id;
 		this.nome = nome;
 	}
+	
+	// GETTERS E SETTERS
 
 	public Integer getId() {
 		return id;
@@ -56,6 +65,8 @@ public class Estado implements Serializable
 	public void setCidades(List<Cidade> cidades) {
 		this.cidades = cidades;
 	}
+	
+	// HASHCODE E EQUALS
 
 	@Override
 	public int hashCode() {
@@ -80,7 +91,5 @@ public class Estado implements Serializable
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-	
-	
+	}	
 }

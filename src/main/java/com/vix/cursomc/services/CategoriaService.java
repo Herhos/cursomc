@@ -3,10 +3,12 @@ package com.vix.cursomc.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.vix.cursomc.domain.Categoria;
 import com.vix.cursomc.repositories.CategoriaRepository;
+import com.vix.cursomc.services.exceptions.DataIntegrityException;
 import com.vix.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -33,5 +35,18 @@ public class CategoriaService
 	{
 		find(obj.getId());
 		return repo.save(obj);
+	}
+	
+	public void delete(Integer id)
+	{
+		find(id);
+		try
+		{
+			repo.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e)
+		{
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
+		}		
 	}
 }

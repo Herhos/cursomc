@@ -2,6 +2,11 @@ package com.vix.cursomc.dto;
 
 import java.io.Serializable;
 
+// Para esse import acrescentar a dependency no pom.xml
+import javax.validation.constraints.NotEmpty;
+// Para esse import acrescentar a dependency no pom.xml
+import org.hibernate.validator.constraints.Length;
+
 import com.vix.cursomc.domain.Categoria;
 
 public class CategoriaDTO implements Serializable
@@ -11,6 +16,8 @@ public class CategoriaDTO implements Serializable
 	// ATRIBUTOS	
 	
 	private Integer id;
+	@NotEmpty(message = "Preenchimento obrigatório!")
+	@Length(min =5, max = 80, message ="O tamanho dever ser entre 5 e 80 caracteres!")
 	private String nome;
 		
 	// CONTRUTORES

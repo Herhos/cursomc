@@ -44,8 +44,9 @@ public class CategoriaService
 	
 	public Categoria update(Categoria obj)
 	{
-		find(obj.getId());
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	// MÉTODO PARA EXCLUIR UMA CATEGORIA
@@ -83,5 +84,13 @@ public class CategoriaService
 	public Categoria fromDTO(CategoriaDTO objDto)
 	{
 		return new Categoria(objDto.getId(), objDto.getNome());
-	}	
+	}
+	
+	// MÉTODO AUXILIAR PARA ATUALIZAR O OBJETO RECEM CRIADO COM BASE
+	// NO OBJETO QUE FOI USADO COMO ARGUMENTO
+			
+	private void updateData(Categoria newObj, Categoria obj)
+	{
+		newObj.setNome(obj.getNome());
+	}
 }
